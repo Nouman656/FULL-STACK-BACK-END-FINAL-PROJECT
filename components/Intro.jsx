@@ -1,21 +1,11 @@
 "use client";
 
-import { useActionState, useEffect } from "react";
-import { toast } from "react-toastify";
-import { UserPlusIcon } from "@heroicons/react/24/solid";
-import { createAccount } from "../lib/actions/auth";
+import { useState } from "react";
+import CreateAccountForm from "./CreateAccountForm";
+import LoginForm from "./LoginForm";
 
 export default function Intro() {
-  const [state, formAction, isPending] = useActionState(createAccount, null);
-
-  useEffect(() => {
-    if (state?.success) {
-      toast.success(state.message);
-    }
-    if (state?.error) {
-      toast.error(state.error);
-    }
-  }, [state]);
+  const [tab, setTab] = useState("create");
 
   return (
     <div className="intro">
@@ -27,26 +17,27 @@ export default function Intro() {
           Personal budgeting is the secret to financial freedom. Start your
           journey today.
         </p>
-        <form action={formAction}>
-          <input
-            type="text"
-            name="userName"
-            required
-            placeholder="What is your name?"
-            aria-label="Your Name"
-            autoComplete="given-name"
-          />
-          <button type="submit" className="btn btn--dark" disabled={isPending}>
-            {isPending ? (
-              <span>Submitting…</span>
-            ) : (
-              <>
-                <span>Create Account</span>
-                <UserPlusIcon width={20} />
-              </>
-            )}
+        <div className="flex-sm">
+          <button
+            type="button"
+            className={
+              tab === "create" ? "btn btn--dark" : "btn btn--outline"
+            }
+            onClick={() => setTab("create")}
+          >
+            Create Account
           </button>
-        </form>
+          <button
+            type="button"
+            className={
+              tab === "login" ? "btn btn--dark" : "btn btn--outline"
+            }
+            onClick={() => setTab("login")}
+          >
+            Login
+          </button>
+        </div>
+        {tab === "create" ? <CreateAccountForm /> : <LoginForm />}
       </div>
       <img src="/illustration.jpg" alt="Person with money" width={600} />
     </div>
