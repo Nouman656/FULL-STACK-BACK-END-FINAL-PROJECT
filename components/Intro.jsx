@@ -3,10 +3,10 @@
 import { useActionState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { UserPlusIcon } from "@heroicons/react/24/solid";
-import { createUser } from "../lib/actions/dashboard";
+import { createAccount } from "../lib/actions/auth";
 
 export default function Intro() {
-  const [state, formAction, isPending] = useActionState(createUser, null);
+  const [state, formAction, isPending] = useActionState(createAccount, null);
 
   useEffect(() => {
     if (state?.success) {
