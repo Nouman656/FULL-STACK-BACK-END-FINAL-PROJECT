@@ -1,4 +1,5 @@
 import Link from "next/link";
+import DeleteUserButton from "./DeleteUserButton";
 import LogoutButton from "./LogoutButton";
 
 export default function Nav({ userName }) {
@@ -8,7 +9,12 @@ export default function Nav({ userName }) {
         <img src="/logomark.svg" alt="" height={30} />
         <span>HomeBudget</span>
       </Link>
-      {userName ? <LogoutButton /> : null}
+      {userName ? (
+        <div className="flex-sm">
+          <LogoutButton />
+          <DeleteUserButton />
+        </div>
+      ) : null}
     </nav>
   );
 }
