@@ -48,6 +48,11 @@ export default function AddBudgetForm() {
             inputMode="decimal"
           />
         </div>
+        {state?.error ? (
+          <p className="muted" role="alert">
+            {state.error}
+          </p>
+        ) : null}
         <button type="submit" className="btn btn--dark" disabled={isPending}>
           {isPending ? (
             <span>Submitting…</span>
