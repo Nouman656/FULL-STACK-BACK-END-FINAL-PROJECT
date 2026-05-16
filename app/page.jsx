@@ -3,7 +3,14 @@ import Dashboard from "../components/Dashboard";
 import Intro from "../components/Intro";
 
 export default async function HomePage() {
-  const { user, budgets, expenses } = await getDashboardData();
+  const {
+    user,
+    budgets,
+    expenses,
+    totalSalary,
+    totalBudgeted,
+    remainingSalary,
+  } = await getDashboardData();
 
   if (!user) {
     return <Intro />;
@@ -12,6 +19,9 @@ export default async function HomePage() {
   return (
     <Dashboard
       userName={user.name}
+      totalSalary={totalSalary}
+      totalBudgeted={totalBudgeted}
+      remainingSalary={remainingSalary}
       budgets={budgets}
       expenses={expenses}
     />
