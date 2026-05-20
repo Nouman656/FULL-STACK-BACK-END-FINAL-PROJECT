@@ -8,7 +8,7 @@ export default async function BudgetPage({ params, searchParams }) {
   const resolvedSearchParams = await Promise.resolve(searchParams);
   const { month, year } = parseMonthYear(resolvedSearchParams);
   const { id } = resolvedParams;
-  const { budget, expenses } = await getBudgetPageData(id);
+  const { budget, expenses } = await getBudgetPageData(id, { month, year });
 
   return (
     <div className="grid-lg">

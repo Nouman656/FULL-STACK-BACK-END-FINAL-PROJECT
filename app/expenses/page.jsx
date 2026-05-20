@@ -6,7 +6,7 @@ import MonthYearFilter from "../../components/MonthYearFilter";
 export default async function ExpensesRoute({ searchParams }) {
   const resolvedSearchParams = await Promise.resolve(searchParams);
   const { month, year } = parseMonthYear(resolvedSearchParams);
-  const { expenses } = await getExpensesPageData();
+  const { expenses } = await getExpensesPageData({ month, year });
 
   return (
     <div className="grid-lg">

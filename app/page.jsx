@@ -14,7 +14,7 @@ export default async function HomePage({ searchParams }) {
     totalSalary,
     totalBudgeted,
     remainingSalary,
-  } = await getDashboardData();
+  } = await getDashboardData({ month, year });
 
   if (!user) {
     return <Intro />;
