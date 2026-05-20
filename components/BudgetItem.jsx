@@ -2,9 +2,13 @@ import Link from "next/link";
 import { BanknotesIcon } from "@heroicons/react/24/outline";
 import { formatCurrency, formatPercentage } from "../lib/formatters";
 import DeleteBudgetButton from "./DeleteBudgetButton";
+import { toMonthYearQuery } from "../lib/dateFilters";
 
-export default function BudgetItem({ budget, showDelete = false }) {
+export default function BudgetItem({ budget, showDelete = false, month, year }) {
   const { id, name, amount, color, spent = 0 } = budget;
+  const query = new URLSearchParams(
+    toMonthYearQuery({ month, year })
+  ).toString();
 
   return (
     <div
@@ -28,7 +32,7 @@ export default function BudgetItem({ budget, showDelete = false }) {
         <DeleteBudgetButton budgetId={id} />
       ) : (
         <div className="flex-sm">
-          <Link href={`/budget/${id}`} className="btn">
+          <Link href={`/budget/${id}?${query}`} className="btn">
             <span>View Details</span>
             <BanknotesIcon width={20} />
           </Link>

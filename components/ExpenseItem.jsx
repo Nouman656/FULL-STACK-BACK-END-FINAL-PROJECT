@@ -9,10 +9,14 @@ import {
   formatDateToLocaleString,
 } from "../lib/formatters";
 import { deleteExpense } from "../lib/actions/dashboard";
+import { toMonthYearQuery } from "../lib/dateFilters";
 
-export default function ExpenseItem({ expense, showBudget }) {
+export default function ExpenseItem({ expense, showBudget, month, year }) {
   const [state, formAction, isPending] = useActionState(deleteExpense, null);
   const budget = expense.budget;
+  const query = new URLSearchParams(
+    toMonthYearQuery({ month, year })
+  ).toString();
 
   useEffect(() => {
     if (state?.success) {
@@ -31,7 +35,7 @@ export default function ExpenseItem({ expense, showBudget }) {
       {showBudget && budget && (
         <td>
           <Link
-            href={`/budget/${budget.id}`}
+            href={`/budget/${budget.id}?${query}`}
             style={{
               "--accent": budget.color,
             }}

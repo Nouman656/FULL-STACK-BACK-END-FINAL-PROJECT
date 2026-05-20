@@ -5,6 +5,7 @@ import BudgetItem from "./BudgetItem";
 import EditSalaryForm from "./EditSalaryForm";
 import Table from "./Table";
 import { formatCurrency } from "../lib/formatters";
+import { toMonthYearQuery } from "../lib/dateFilters";
 
 export default function Dashboard({
   userName,
@@ -13,7 +14,10 @@ export default function Dashboard({
   remainingSalary,
   budgets,
   expenses,
+  month,
+  year,
 }) {
+  const query = new URLSearchParams(toMonthYearQuery({ month, year })).toString();
   const recentExpenses = [...expenses]
     .sort((a, b) => b.createdAt - a.createdAt)
     .slice(0, 8);
@@ -39,28 +43,28 @@ export default function Dashboard({
             <p className="h3 accent">{formatCurrency(remainingSalary)}</p>
           </div>
         </div>
-        <EditSalaryForm salary={totalSalary} />
+        <EditSalaryForm salary={totalSalary} month={month} year={year} />
       </div>
 
       <div className="grid-sm">
         {budgets.length > 0 ? (
           <div className="grid-lg">
             <div className="flex-lg">
-              <AddBudgetForm />
-              <AddExpenseForm budgets={budgets} />
+              <AddBudgetForm month={month} year={year} />
+              <AddExpenseForm budgets={budgets} month={month} year={year} />
             </div>
             <h2>Existing Budgets</h2>
             <div className="budgets">
               {budgets.map((budget) => (
-                <BudgetItem key={budget.id} budget={budget} />
+                <BudgetItem key={budget.id} budget={budget} month={month} year={year} />
               ))}
             </div>
             {expenses.length > 0 && (
               <div className="grid-md">
                 <h2>Recent Expenses</h2>
-                <Table expenses={recentExpenses} />
+                <Table expenses={recentExpenses} month={month} year={year} />
                 {expenses.length > 8 && (
-                  <Link href="/expenses" className="btn btn--dark">
+                  <Link href={`/expenses?${query}`} className="btn btn--dark">
                     View all expenses
                   </Link>
                 )}
@@ -71,7 +75,7 @@ export default function Dashboard({
           <div className="grid-sm">
             <p>Personal budgeting is the secret to financial freedom.</p>
             <p>Create a budget to get started!</p>
-            <AddBudgetForm />
+            <AddBudgetForm month={month} year={year} />
           </div>
         )}
       </div>

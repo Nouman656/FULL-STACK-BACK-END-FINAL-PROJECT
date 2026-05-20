@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { CurrencyDollarIcon } from "@heroicons/react/24/solid";
 import { updateSalary } from "../lib/actions/dashboard";
 
-export default function EditSalaryForm({ salary }) {
+export default function EditSalaryForm({ salary, month, year }) {
   const [state, formAction, isPending] = useActionState(updateSalary, null);
 
   useEffect(() => {
@@ -21,6 +21,8 @@ export default function EditSalaryForm({ salary }) {
     <div className="form-wrapper">
       <h2 className="h3">Your salary</h2>
       <form action={formAction} className="grid-sm">
+        <input type="hidden" name="month" value={String(month)} />
+        <input type="hidden" name="year" value={String(year)} />
         <div className="grid-xs">
           <label htmlFor="salary">Monthly salary</label>
           <input

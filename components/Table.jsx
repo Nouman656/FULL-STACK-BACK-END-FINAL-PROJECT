@@ -1,6 +1,6 @@
 import ExpenseItem from "./ExpenseItem";
 
-export default function Table({ expenses, showBudget = true }) {
+export default function Table({ expenses, showBudget = true, month, year }) {
   return (
     <div className="table">
       <table>
@@ -16,7 +16,12 @@ export default function Table({ expenses, showBudget = true }) {
         <tbody>
           {expenses.map((expense) => (
             <tr key={expense.id}>
-              <ExpenseItem expense={expense} showBudget={showBudget} />
+              <ExpenseItem
+                expense={expense}
+                showBudget={showBudget}
+                month={month}
+                year={year}
+              />
             </tr>
           ))}
         </tbody>
