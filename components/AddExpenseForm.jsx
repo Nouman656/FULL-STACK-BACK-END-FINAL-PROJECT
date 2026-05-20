@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import { createExpense } from "../lib/actions/dashboard";
 
-export default function AddExpenseForm({ budgets, month, year }) {
+export default function AddExpenseForm({ budgets }) {
   const [state, formAction, isPending] = useActionState(createExpense, null);
   const formRef = useRef(null);
   const focusRef = useRef(null);
@@ -31,8 +31,6 @@ export default function AddExpenseForm({ budgets, month, year }) {
         Expense
       </h2>
       <form action={formAction} className="grid-sm" ref={formRef}>
-        <input type="hidden" name="month" value={String(month)} />
-        <input type="hidden" name="year" value={String(year)} />
         <div className="expense-inputs">
           <div className="grid-xs">
             <label htmlFor="newExpense">Expense Name</label>
