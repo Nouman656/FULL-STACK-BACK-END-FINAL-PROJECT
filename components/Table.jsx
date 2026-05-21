@@ -1,6 +1,12 @@
 import ExpenseItem from "./ExpenseItem";
 
-export default function Table({ expenses, showBudget = true, month, year }) {
+export default function Table({
+  expenses,
+  showBudget = true,
+  month,
+  year,
+  mode = "search",
+}) {
   return (
     <div className="table">
       <table>
@@ -21,6 +27,7 @@ export default function Table({ expenses, showBudget = true, month, year }) {
                 showBudget={showBudget}
                 month={month}
                 year={year}
+                mode={mode}
               />
             </tr>
           ))}

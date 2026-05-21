@@ -11,7 +11,8 @@ export default async function HomePage({ searchParams }) {
     user,
     budgets,
     expenses,
-    totalSalary,
+    baseSalary,
+    monthSalary,
     totalBudgeted,
     remainingSalary,
   } = await getDashboardData({ mode, month, year });
@@ -23,7 +24,8 @@ export default async function HomePage({ searchParams }) {
   return (
     <Dashboard
       userName={user.name}
-      totalSalary={totalSalary}
+      baseSalary={baseSalary}
+      monthSalary={monthSalary}
       totalBudgeted={totalBudgeted}
       remainingSalary={remainingSalary}
       budgets={budgets}

@@ -5,10 +5,11 @@ import { toast } from "react-toastify";
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import { createExpense } from "../lib/actions/dashboard";
 
-export default function AddExpenseForm({ budgets }) {
+export default function AddExpenseForm({ budgets, month, year }) {
   const [state, formAction, isPending] = useActionState(createExpense, null);
   const formRef = useRef(null);
   const focusRef = useRef(null);
+  const hasBudgets = budgets.length > 0;
 
   useEffect(() => {
     if (state?.success) {
@@ -21,16 +22,22 @@ export default function AddExpenseForm({ budgets }) {
     }
   }, [state]);
 
+  if (!hasBudgets) {
+    return (
+      <div className="form-wrapper">
+        <h2 className="h3">Add New Expense</h2>
+        <p className="muted">Create a budget first</p>
+      </div>
+    );
+  }
+
   return (
     <div className="form-wrapper">
-      <h2 className="h3">
-        Add New{" "}
-        <span className="accent">
-          {budgets.length === 1 && budgets.map((budg) => budg.name)}
-        </span>{" "}
-        Expense
-      </h2>
+      <h2 className="h3">Add New Expense</h2>
       <form action={formAction} className="grid-sm" ref={formRef}>
+        <input type="hidden" name="month" value={String(month)} />
+        <input type="hidden" name="year" value={String(year)} />
+        <input type="hidden" name="mode" value="edit" />
         <div className="expense-inputs">
           <div className="grid-xs">
             <label htmlFor="newExpense">Expense Name</label>
@@ -56,7 +63,7 @@ export default function AddExpenseForm({ budgets }) {
             />
           </div>
         </div>
-        <div className="grid-xs" hidden={budgets.length === 1}>
+        <div className="grid-xs">
           <label htmlFor="newExpenseBudget">Budget Category</label>
           <select
             name="newExpenseBudget"
@@ -92,4 +99,3 @@ export default function AddExpenseForm({ budgets }) {
     </div>
   );
 }
-

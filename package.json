@@ -10,7 +10,9 @@
     "db:migrate": "prisma migrate dev",
     "db:studio": "prisma studio",
     "db:validate": "prisma validate",
-    "db:test": "node --env-file=.env scripts/test-prisma-connection.mjs"
+    "db:test": "node --env-file=.env scripts/test-prisma-connection.mjs",
+    "db:seed": "node prisma/seed.js",
+    "db:backfill": "node --env-file=.env prisma/backfill-month-plans.js"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.14",

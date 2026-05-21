@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { CurrencyDollarIcon } from "@heroicons/react/24/solid";
 import { createBudget } from "../lib/actions/dashboard";
 
-export default function AddBudgetForm() {
+export default function AddBudgetForm({ month, year }) {
   const [state, formAction, isPending] = useActionState(createBudget, null);
   const formRef = useRef(null);
   const focusRef = useRef(null);
@@ -25,6 +25,9 @@ export default function AddBudgetForm() {
     <div className="form-wrapper">
       <h2 className="h3">Create budget</h2>
       <form action={formAction} className="grid-sm" ref={formRef}>
+        <input type="hidden" name="month" value={String(month)} />
+        <input type="hidden" name="year" value={String(year)} />
+        <input type="hidden" name="mode" value="edit" />
         <div className="grid-xs">
           <label htmlFor="newBudget">Budget Name</label>
           <input

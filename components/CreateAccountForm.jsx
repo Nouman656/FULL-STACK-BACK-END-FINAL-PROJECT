@@ -28,6 +28,20 @@ export default function CreateAccountForm() {
           autoComplete="given-name"
         />
       </div>
+      <div className="grid-xs">
+        <label htmlFor="create-salary">Monthly salary</label>
+        <input
+          id="create-salary"
+          type="number"
+          name="salary"
+          step="0.01"
+          min="0"
+          inputMode="decimal"
+          required
+          placeholder="e.g., 5000"
+          aria-label="Monthly salary"
+        />
+      </div>
       {state?.error ? (
         <p className="muted" role="alert">
           {state.error}

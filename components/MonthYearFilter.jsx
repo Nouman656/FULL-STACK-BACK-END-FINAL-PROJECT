@@ -1,9 +1,13 @@
 "use client";
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { MONTH_OPTIONS, toMonthYearQuery } from "../lib/dateFilters";
+import {
+  MONTH_OPTIONS,
+  parseDashboardMode,
+  toMonthYearQuery,
+} from "../lib/dateFilters";
 
-export default function MonthYearFilter({ month, year }) {
+export default function MonthYearFilter({ month, year, mode = "edit" }) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -11,9 +15,13 @@ export default function MonthYearFilter({ month, year }) {
   function updateFilter(nextMonth, nextYear) {
     const params = new URLSearchParams(searchParams.toString());
     const query = toMonthYearQuery({ month: nextMonth, year: nextYear });
+    const activeMode = parseDashboardMode(
+      Object.fromEntries(params.entries())
+    );
 
     params.set("month", query.month);
     params.set("year", query.year);
+    params.set("mode", activeMode || mode);
 
     router.push(`${pathname}?${params.toString()}`);
   }

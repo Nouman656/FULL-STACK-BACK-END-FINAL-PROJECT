@@ -29,6 +29,7 @@ export default function DeleteBudgetButton({ budgetId }) {
         }}
       >
         <input type="hidden" name="budgetId" value={budgetId} />
+        <input type="hidden" name="mode" value="edit" />
         <button type="submit" className="btn" disabled={isPending}>
           <span>{isPending ? "Deleting…" : "Delete Budget"}</span>
           <TrashIcon width={20} />

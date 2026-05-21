@@ -9,14 +9,21 @@ import {
   formatDateToLocaleString,
 } from "../lib/formatters";
 import { deleteExpense } from "../lib/actions/dashboard";
-import { toMonthYearQuery } from "../lib/dateFilters";
+import { buildPeriodQuery } from "../lib/dateFilters";
 
-export default function ExpenseItem({ expense, showBudget, month, year }) {
+export default function ExpenseItem({
+  expense,
+  showBudget,
+  month,
+  year,
+  mode = "search",
+}) {
   const [state, formAction, isPending] = useActionState(deleteExpense, null);
   const budget = expense.budget;
-  const query = new URLSearchParams(
-    toMonthYearQuery({ month, year })
-  ).toString();
+  const budgetHref = budget
+    ? `/budget/${budget.id}?${buildPeriodQuery({ mode, month, year })}`
+    : "#";
+  const canDelete = mode !== "search";
 
   useEffect(() => {
     if (state?.success) {
@@ -35,7 +42,7 @@ export default function ExpenseItem({ expense, showBudget, month, year }) {
       {showBudget && budget && (
         <td>
           <Link
-            href={`/budget/${budget.id}?${query}`}
+            href={budgetHref}
             style={{
               "--accent": budget.color,
             }}
@@ -45,17 +52,20 @@ export default function ExpenseItem({ expense, showBudget, month, year }) {
         </td>
       )}
       <td>
-        <form action={formAction}>
-          <input type="hidden" name="expenseId" value={expense.id} />
-          <button
-            type="submit"
-            className="btn btn--warning"
-            disabled={isPending}
-            aria-label={`Delete ${expense.name} expense`}
-          >
-            <TrashIcon width={20} />
-          </button>
-        </form>
+        {canDelete ? (
+          <form action={formAction}>
+            <input type="hidden" name="expenseId" value={expense.id} />
+            <input type="hidden" name="mode" value="edit" />
+            <button
+              type="submit"
+              className="btn btn--warning"
+              disabled={isPending}
+              aria-label={`Delete ${expense.name} expense`}
+            >
+              <TrashIcon width={20} />
+            </button>
+          </form>
+        ) : null}
       </td>
     </>
   );
